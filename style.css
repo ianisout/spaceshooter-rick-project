@@ -1,0 +1,97 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/space.png');
+    background-repeat: repeat;
+}
+
+#main-play-area {
+    background-color: black;
+    background-image: url(img/space.png);
+    height: 800px;
+    width: 800px;
+    opacity: 1;
+    border: 2px outset white;
+}
+
+.game-instructions {
+    position: relative;
+    color: white;
+    left: 25vh;
+    top: 0px;
+    font-size: 20px;
+}
+
+.planet {
+    position: fixed;
+    height: 600px;
+    left: -200px;
+    z-index: -1;
+    animation: rotation 200s infinite;
+}
+
+.start-button {
+    position:relative;
+    color: white;
+    top: 15rem;
+    left: 20rem;
+    align-self: center;
+    cursor: pointer;
+}
+
+.player-shooter {
+    position: relative;
+    height: 100px;
+    width: 140px;
+    left: 20px;
+    top: 250px;
+    -webkit-animation: mover 0.5s infinite alternate;
+    animation: mover 1s infinite  alternate;
+}
+
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-5px); }
+}
+
+.laser {
+    position: relative;
+    width: 40px;
+    height: 30px;
+}
+
+.alien {
+    height: 60px;
+    width: 70px;
+    position: relative;
+    animation: rotation 5s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+.alien-transition {
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.dead-alien {
+    height: 60px;
+    width: 60px;
+    position: relative;
+    opacity: 0;
+}

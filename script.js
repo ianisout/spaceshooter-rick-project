@@ -25,8 +25,8 @@ function moveUp() {
     if(topPosition === "10px") {
         return
     } else {
-        let position = parseInt(topPosition); // get computed style of pixels
-        position -= 20; // <-- A
+        let position = parseInt(topPosition);
+        position -= 20;
         yourShip.style.top = `${position}px`;
     }
 }
@@ -34,7 +34,7 @@ function moveUp() {
 //function to move down
 function moveDown() {
     let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
-    if(topPosition === "730px"){ // has to be divisible by A above
+    if(topPosition === "730px"){
         return
     } else {
         let position = parseInt(topPosition);
@@ -66,16 +66,21 @@ function moveLaser(laser) {
         let xPosition = parseInt(laser.style.left);
         let aliens = document.querySelectorAll('.alien');
 
-        aliens.forEach((alien) => { // comparing whether each alien was hit. If yes, change source of image
+        aliens.forEach((alien) => {
             if(checkLaserCollision(laser, alien)) {
                 alien.src = 'img/explosion.png';
                 alien.classList.remove('alien');
                 alien.classList.add('dead-alien');
+                laser.remove();
+                clearInterval(laserInterval);
+                delete laser;
             }
         })
 
         if(xPosition >= 500) {
             laser.remove();
+            clearInterval(laserInterval);
+            delete laser;
         } else {
             laser.style.left = `${xPosition + 8}px`;
         }
@@ -85,9 +90,9 @@ function moveLaser(laser) {
 //generating random enemies
 function createAliens() {
     let newAlien = document.createElement('img');
-    let alienSprite = aliensImg[Math.floor(Math.random() * 3)]; //sorteio de imagens
+    let alienSprite = aliensImg[Math.floor(Math.random() * 3)];
     newAlien.src = alienSprite;
-    newAlien.classList.add('alien'); // to manipulate in CSS
+    newAlien.classList.add('alien');
     newAlien.classList.add('alien-transition');
     newAlien.style.left = '550px';
     newAlien.style.top = `${Math.floor(Math.random() * 330) + 30}px`;
@@ -96,24 +101,22 @@ function createAliens() {
 }
 
 function moveAlien(alien) {
-    let moveAlienInterval = setInterval(() => {
+    setInterval(() => {
         let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('left'));
-        if(xPosition <= 25) {
+        if(xPosition <= -200) {
             if(Array.from(alien.classList).includes('dead-alien')) {
                 alien.remove();
             } else {
                 gameOver();
             }
-        } else {
-            alien.style.left = `${xPosition - 4}px`;
         }
+        alien.style.left = `${xPosition -5}px`;
     }, 30);
 }
 
 function checkLaserCollision(laser, alien) {
     let laserTop = parseInt(laser.style.top);
     let laserLeft = parseInt(laser.style.left);
-    let laserBottom = laserTop - 20;
     let alienTop = parseInt(alien.style.top);
     let alienLeft = parseInt(alien.style.left);
     let alienBottom = alienTop - 30;
